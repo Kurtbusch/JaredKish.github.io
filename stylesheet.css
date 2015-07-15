@@ -42,3 +42,11 @@ button:active {
 :visited {
 	color:red;
 }
+
+:active {
+	color:pink;
+}
+
+:hover {
+	color:blue;
+}
