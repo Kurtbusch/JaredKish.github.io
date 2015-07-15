@@ -34,3 +34,11 @@ button:active {
 .stage:active .ball {
   animation-play-state: paused;
 }
+
+:link {
+	color:green;
+}
+
+:visited {
+	color:red;
+}
