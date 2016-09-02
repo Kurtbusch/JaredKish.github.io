@@ -1,0 +1,60 @@
+float[] input={0.25,0.25};
+float target=0.5;
+int iterations=1000;
+public float w[];
+public int numw=9;
+public int numh=3;
+
+for(int i=0;i<numw;i++){
+  w[i]=random(1);
+}
+
+float Cycle(float input[], float target) {
+  float[] ph=new float[numh];
+  float[] h=new float[numh];
+  float sum=0;
+  for(int i=0;i<numh;i++){
+    ph[i]=0;
+    for(int j=0;j<input.length;j++) {
+      ph[i]+=input[j]*w[i+(j*numh)];
+    }
+    h[i]=sigmoid(ph[i]);
+    sum+=h[i]*w[numh*input.length+i];
+  }
+  float calc=sigmoid(sum);
+  float error=target-calc;
+  float dos=sprime(sum) * error;
+  weightChange(dos, ph, h, input);
+  return calc;
+}
+
+float sigmoid(float x) {
+  float y = 1/(1+exp(-1*x));
+  return y;
+}
+
+float sprime(float x) {
+  float y=(exp(-1*x))/(sq(exp(-1*x)+1));
+  return y;
+}
+
+void weightChange(float dos, float[] ph, float[] h, float[] input)  {
+  float[] dhs=new float[numh];
+  for(int i=0;i<numh;i++) {
+    dhs[i]=(dos/w[numh*input.length+i])*sprime(ph[i]);
+    for(int j=0;j<input.length;j++){
+      w[i+(j*numh)]+=dhs[i]/input[j];
+    }
+    w[numh*input.length+i]+=dos/sigmoid(ph[i]);
+  }
+  
+}{
+
+for(int i=0;i<iterations;i++)  {
+  float output = Cycle(input,target);
+  println(output);
+  /*if(i==iterations-1){
+    float test = Cycle(0.4,0.4,0.8);
+    println(test);
+  }*/
+}}}
